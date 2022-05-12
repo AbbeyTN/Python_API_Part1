@@ -1,0 +1,24 @@
+class Solution:
+    def crawl(self, startUrl: str, htmlParser: 'HtmlParser') -> List[str]:
+        sub_urls = startUrl.split('/')
+        queue = deque()
+        queue.append( startUrl)
+        visited = set()
+        visited.add( startUrl)
+        res = []
+        while queue:
+            url = queue.popleft()
+            
+            urls = url.split('/')
+            if  urls[0] == sub_urls[0] and urls[2] == sub_urls[2]:
+                res.append(url)
+            else:
+                continue
+            #visited.add(url)
+            for u in htmlParser.getUrls(url):
+                if u not in visited:
+                    queue.append(u)
+                    visited.add(u)
+                    
+                    
+        return res
